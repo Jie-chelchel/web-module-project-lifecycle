@@ -21,12 +21,25 @@ class UserCard extends Component {
     fetchData();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.user !== prevProps.user) {
+      const fetchData = async () => {
+        const { data } = await axios.get(
+          `https://api.github.com/users/${this.props.user}`
+        );
+        console.log(data);
+        this.setState({ userData: data });
+        this.setState({ followers: [] });
+      };
+      fetchData();
+    }
+  }
+
   handleFollowers = () => {
     const fetchData = async () => {
       const { data } = await axios.get(
         `https://api.github.com/users/${this.props.user}/followers`
       );
-      console.log(data);
       this.setState({ followers: data });
     };
     fetchData();
@@ -39,6 +52,7 @@ class UserCard extends Component {
         <img src={this.state.userData.avatar_url} alt="user" />
         <p>{this.state.userData.bio}</p>
         <button onClick={this.handleFollowers}>Click to See Followers</button>
+
         <UserFollowers followers={this.state.followers} />
       </div>
     );

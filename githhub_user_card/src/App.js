@@ -2,10 +2,10 @@ import "./App.css";
 import { Component } from "react";
 import UserCard from "./components/UserCard";
 import styled from "styled-components";
-
+import Form from "./components/Form";
 const AppStyle = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   color: white;
   background: #323438;
   text-align: center;
@@ -24,30 +24,18 @@ const AppStyle = styled.div`
 `;
 
 class App extends Component {
-  state = { user: "", showUser: false };
+  state = { user: "" };
 
-  searchUser = (e) => {
-    this.setState({ user: e.target.value });
-  };
-
-  showUser = (e) => {
-    e.preventDefault();
-    this.setState({ showUser: true });
+  showUser = (inputValue) => {
+    console.log(inputValue);
+    this.setState({ user: inputValue, followers:[] });
   };
   render() {
     return (
       <AppStyle>
         <h1> Github User Card</h1>
-        <form>
-          <input
-            type="text"
-            onChange={this.searchUser}
-            value={this.state.user}
-            placeholder="Please Enter a Git Hub Name "
-          />
-          <button onClick={this.showUser}>Search User</button>
-        </form>
-        {this.state.showUser && <UserCard user={this.state.user} />}
+        <Form showUser={this.showUser} />
+        {this.state.user && <UserCard user={this.state.user} />}
       </AppStyle>
     );
   }
