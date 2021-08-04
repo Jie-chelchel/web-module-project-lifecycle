@@ -28,7 +28,7 @@ class App extends Component {
 
   showUser = (inputValue) => {
     console.log(inputValue);
-    this.setState({ user: inputValue, followers:[] });
+    this.setState({ user: inputValue });
   };
   render() {
     return (
